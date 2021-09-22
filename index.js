@@ -1,6 +1,7 @@
 const input = document.getElementById('date');
 const luckyNumber = document.getElementById('lucky-number');
 const resultText = document.getElementById('result-text');
+const load = document.getElementById('load');
 
 const button = document.getElementById('btn-1');
 
@@ -8,18 +9,28 @@ const compareValue = (sum, userInput) => {
   if (!input.value || !userInput || userInput === 0) {
     resultText.innerText = 'Enter a valid number';
   } else if (sum % userInput === 0) {
-    resultText.innerText = 'Your Birthday is lucky!!';
+    let img = document.createElement('img');
+    img.src = 'https://images.cooltext.com/5553858.png';
+    resultText.appendChild(img);
   } else {
-    resultText.innerText = 'Your Birthday is not that lucky ';
+    let img = document.createElement('img');
+    img.src = 'https://images.cooltext.com/5553866.gif';
+    resultText.appendChild(img);
   }
 };
 
+let timesClicked = 0;
 const printSum = () => {
-  let fullDate = input.value.split('-').join('');
-  let sum = calculateSum(fullDate);
-  let lucky = Number(luckyNumber.value);
+  timesClicked++;
+  if (timesClicked > 1) {
+    location.reload();
+  } else {
+    let fullDate = input.value.split('-').join('');
+    let sum = calculateSum(fullDate);
+    let lucky = Number(luckyNumber.value);
 
-  compareValue(sum, lucky);
+    compareValue(sum, lucky);
+  }
 };
 
 const calculateSum = dob => {
@@ -32,11 +43,3 @@ const calculateSum = dob => {
 };
 
 button.addEventListener('click', printSum);
-
-// button.addEventListener('click', () => {
-//   var date = new Date(input.value);
-//   var day = date.getDate();
-//   var month = date.getMonth() + 1;
-//   var year = date.getFullYear();
-//   console.log([day, month, year].join('/'));
-// });
